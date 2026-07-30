@@ -6,37 +6,39 @@ Implementation checklist. See [PLAN.md](PLAN.md) for architecture and phase deta
 
 ## Phase 1 — WhatsApp RAG foundation
 
-- [ ] **scaffold** — Create `pyproject.toml`, `config.toml`, and `src/personal_reply/` package layout
-- [ ] **ingest** — Build WhatsApp `.txt` parser; extract user-sent messages with `context_before` metadata
-- [ ] **rag-store** — Implement LanceDB store + Ollama embedding client + vector search retrieval
-- [ ] **llm-reply** — Build prompt template and Ollama chat client for style-matched replies
-- [ ] **cli** — Add `personal_reply.cli suggest --text "..."` for testing without browser
+- [x] **scaffold** — Create `pyproject.toml`, `config.toml`, and `src/personal_reply/` package layout
+- [x] **ingest** — Build WhatsApp `.txt` parser; extract user-sent messages with `context_before` metadata
+- [x] **rag-store** — Implement LanceDB store + Ollama embedding client + vector search retrieval
+- [x] **llm-reply** — Build prompt template and Ollama chat client for style-matched replies
+- [x] **cli** — Add `python -m personal_reply suggest --text "..."` for testing without browser
 
 ---
 
 ## Phase 2 — WhatsApp browser reader
 
-- [ ] **browser-connector** — Playwright CDP connector to existing Chrome (`port 9222`)
-- [ ] **browser-whatsapp** — WhatsApp Web DOM adapter (thread read + compose selector)
-- [ ] **launch-script** — `scripts/launch_chrome_debug.sh`
-- [ ] **cli-browser** — `personal_reply.cli suggest --from-browser`
+- [x] **browser-connector** — Playwright CDP connector to existing Chrome (`port 9222`)
+- [x] **browser-whatsapp** — WhatsApp Web DOM adapter (thread read + compose selector)
+- [x] **launch-script** — `scripts/launch_chrome_debug.sh`
+- [x] **cli-browser** — `personal_reply suggest --from-browser`
 
 ---
 
 ## Phase 3 — Menubar app
 
-- [ ] **menubar** — rumps tray app with **Suggest Reply**, **Re-ingest**, **Settings**, **Quit**
-- [ ] **hotkey** — Global **Cmd+Shift+R** via `pynput`
-- [ ] **clipboard** — Auto-copy suggestion + notification on success
-- [ ] **docs** — First-run guide: Chrome debug setup, WhatsApp export instructions
+- [x] **menubar** — rumps tray app with **Suggest Reply**, **Re-ingest**, **Settings**, **Quit**
+- [x] **hotkey** — Global **Cmd+Shift+R** via `pynput`
+- [x] **clipboard** — Auto-copy suggestion + notification on success
+- [x] **docs** — First-run guide: Chrome debug setup, WhatsApp export instructions
 
 ---
 
 ## Phase 4 — WhatsApp polish (optional)
 
-- [ ] **insert-reply** — Type suggestion into WhatsApp compose box via Playwright
+- [x] **insert-reply** — Type suggestion into WhatsApp compose box via Playwright
+- [x] **reopen-mode** — Draft fresh openers when thread is stale or your message was last
+- [x] **research-subagent** — Web search for weather, sports, news; main agent auto-invokes from conversation
 - [ ] **re-ingest** — Background or menu-triggered re-ingest of new exports
-- [ ] **per-contact** — Weight retrieval by contact (casual vs formal)
+- [x] **per-contact** — Contact tags with blended affinity scoring (direct contact weighted higher)
 
 ---
 
@@ -53,13 +55,14 @@ Implementation checklist. See [PLAN.md](PLAN.md) for architecture and phase deta
 
 | ID | Task | Status |
 |----|------|--------|
-| scaffold | Project structure + config | pending |
-| ingest | WhatsApp `.txt` parser | pending |
-| rag-store | LanceDB + Ollama embeddings | pending |
-| llm-reply | Prompt + Ollama chat | pending |
-| browser | CDP + WhatsApp adapter | pending |
-| menubar | Tray app + hotkey | pending |
-| docs | Setup guide in README | pending |
+| scaffold | Project structure + config | done |
+| ingest | WhatsApp `.txt` parser | done |
+| rag-store | LanceDB + Ollama embeddings | done |
+| llm-reply | Prompt + Ollama chat | done |
+| cli | Text-only suggest command | done |
+| browser | CDP + WhatsApp adapter | done |
+| menubar | Tray app + hotkey | done |
+| docs | Setup guide in README | done |
 | gmail | Gmail ingest + browser (Phase 5) | pending |
 
 **Repo bootstrap:** README, PLAN, TODO, `.gitignore` — done.

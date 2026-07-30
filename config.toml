@@ -1,0 +1,63 @@
+[ollama]
+base_url = "http://localhost:11434"
+embedding_model = "nomic-embed-text"
+# chat_model = "llama3.2"
+# chat_model = "llama3.1:8b"
+# chat_model = "mistral"
+chat_model = "qwen2.5"
+
+[paths]
+exports_dir = "data/exports"
+lancedb_uri = "data/style.lance"
+
+[ingest]
+# Names that identify your messages in WhatsApp exports
+sender_names = ["You", "Sameer"]
+# Messages embedded per Ollama /api/embed request
+embed_batch_size = 32
+# Conversation context captured around each of your messages
+context_messages_before = 3
+context_messages_after = 2
+
+[rag]
+top_k = 8
+platform = "whatsapp"
+# Fetch more vector candidates, then re-rank with recency blended in
+candidate_multiplier = 5
+vector_weight = 0.7
+recency_weight = 0.3
+recency_half_life_days = 10
+# When a contact has tags, direct-contact examples keep full weight; same-tag contacts use this multiplier
+contact_match_weight = 1.0
+category_match_weight = 0.65
+
+[contacts.tags]
+# Tags are shared style groups. RAG searches all contacts with overlapping tags,
+# but ranks the active contact higher (not a fallback — one blended ranking).
+"Papa New" = ["parent", "family", "muslim"]
+"Tridib Das" = ["friend"]
+"Amaan Jio" = ["family", "muslim"]
+"Raju Banglaore" = ["friend"]
+"Lucky Pune" = ["family", "muslim"]
+
+[reply]
+user_name = "Sameer"
+# Switch to opener mode when the thread is older than this (hours)
+stale_after_hours = 12
+# If your message was last, draft a new opener instead of replying to an old them message
+reopen_when_last_from_me = true
+
+[browser]
+chrome_debug_port = 9222
+chrome_debug_url = "http://localhost:9222"
+# Type generated replies into the WhatsApp compose box (also copies to clipboard)
+insert_into_compose = true
+
+[research]
+# Web research subagent — main agent decides from conversation when auto = true
+enabled = true
+auto = true
+max_queries = 2
+max_results_per_query = 3
+# Skip the decision step and always research on stale-thread opener mode
+auto_on_reopen = false
