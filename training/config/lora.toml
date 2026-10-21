@@ -1,0 +1,47 @@
+# MLX LoRA / QLoRA fine-tune config for WhatsApp style adapters.
+# Paths are relative to the repository root unless absolute.
+
+[paths]
+# Reuse the app's WhatsApp exports (no copy into training/data/raw needed).
+raw_dir = "data/exports"
+processed_dir = "training/data/processed"
+adapters_dir = "training/data/adapters"
+run_name = "whatsapp-style"
+
+[model]
+# Small MLX instruct base (LoRA). Start here for fast Mac iteration.
+model = "mlx-community/Qwen2.5-0.5B-Instruct-bf16"
+# When use_qlora is true, train against this 4-bit base instead (QLoRA).
+qlora_model = "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+use_qlora = false
+
+[dataset]
+# Match how you appear in the WhatsApp .txt exports (case-insensitive).
+sender_names = ["Sameer", "You"]
+context_messages_before = 3
+min_reply_chars = 2
+val_fraction = 0.1
+seed = 42
+system_prompt = "Reply in my WhatsApp voice: match my tone, length, punctuation, and formality. Keep it natural and concise."
+
+[lora]
+# mlx-lm fine-tune type: lora | dora | full
+fine_tune_type = "lora"
+rank = 8
+# mlx-lm uses "scale" (roughly alpha); dropout applies to LoRA layers.
+scale = 20.0
+dropout = 0.05
+# How many transformer layers get adapters (-1 = all).
+num_layers = 16
+
+[train]
+iters = 300
+batch_size = 1
+learning_rate = 1.0e-5
+steps_per_report = 10
+steps_per_eval = 50
+val_batches = 10
+# Mask user/system tokens so loss focuses on assistant replies.
+mask_prompt = true
+max_seq_length = 1024
+grad_checkpoint = false

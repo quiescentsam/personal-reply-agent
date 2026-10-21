@@ -1,0 +1,15 @@
+# Local training artifacts (keep directory placeholders)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/adapters/*
+!data/adapters/.gitkeep
+
+# Caches / Python
+__pycache__/
+*.py[cod]
+.cache/
+.mlx/
+*.npz
+.DS_Store
