@@ -13,7 +13,7 @@ run_name = "whatsapp-style"
 model = "mlx-community/Qwen2.5-0.5B-Instruct-bf16"
 # When use_qlora is true, train against this 4-bit base instead (QLoRA).
 qlora_model = "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
-use_qlora = false
+use_qlora = true
 
 [dataset]
 # Match how you appear in the WhatsApp .txt exports (case-insensitive).
